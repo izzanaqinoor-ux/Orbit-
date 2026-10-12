@@ -1,0 +1,43 @@
+### Liveness check — no DB dependency
+GET http://127.0.0.1:8000/health
+
+### Readiness check — confirms the app can see the migrated schema
+GET http://127.0.0.1:8000/health/db
+
+### Register a user
+POST http://127.0.0.1:8000/auth/register
+Content-Type: application/json
+
+{
+  "email": "you@example.com",
+  "password": "choose-a-real-password",
+  "timezone": "Asia/Singapore"
+}
+
+### Login (form-encoded — this is what OAuth2PasswordRequestForm expects)
+# @name login
+POST http://127.0.0.1:8000/auth/login
+Content-Type: application/x-www-form-urlencoded
+
+username=you@example.com&password=choose-a-real-password
+
+### Create a flexible Commitment (uses the token from the login response above)
+POST http://127.0.0.1:8000/commitments
+Authorization: Bearer {{login.response.body.$.access_token}}
+Content-Type: application/json
+
+{
+  "mode": "flexible",
+  "title": "Write essay",
+  "category": "study",
+  "estimated_duration_minutes": 300,
+  "due_at": "2026-10-05T23:59:00+08:00"
+}
+
+### List your commitments
+GET http://127.0.0.1:8000/commitments
+Authorization: Bearer {{login.response.body.$.access_token}}
+
+### Current week's capacity snapshot — the actual point of the whole schema
+GET http://127.0.0.1:8000/capacity/current
+Authorization: Bearer {{login.response.body.$.access_token}}
