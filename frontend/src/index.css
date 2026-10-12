@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/* One serif family for everything; Newsreader has optical sizes, so the same
+   face reads well as a large title and as small body text. */
+@theme {
+  --font-sans: "Newsreader", "Iowan Old Style", Georgia, serif;
+
+  /* Dusk: a quiet, slightly warm dark. Nothing here is fully saturated. */
+  --color-bg: #0f1318;
+  --color-surface: #161b21;
+  --color-surface2: #1d232a;
+  --color-line: rgb(232 227 216 / 0.09);
+  --color-line2: rgb(232 227 216 / 0.2);
+  --color-ink: #e8e3d8;
+  --color-muted: #9b9a94;
+  --color-faint: #6c6f72;
+
+  --color-sun: #d8b273;
+  --color-pos: #9bb89f;
+  --color-warn: #d2a76a;
+  --color-neg: #c98a82;
+
+  --color-orbit-study: #8ea8c3;
+  --color-orbit-work: #c4876a;
+  --color-orbit-personal: #93b39f;
+  --color-orbit-other: #a89fb7;
+  --color-orbit-finance: #8fb1ad;
+  --color-orbit-rose: #c4909a;
+  --color-orbit-sand: #c9b48a;
+  --color-orbit-violet: #a597c2;
+
+  /* School calendar tints: a cool slate for term, a warm sand for breaks */
+  --color-term: #7d97b3;
+  --color-break: #c9a875;
+}
+
+html { font-size: 17px; color-scheme: dark; }
+body { background: var(--color-bg); color: var(--color-ink); font-family: var(--font-sans); font-optical-sizing: auto; -webkit-font-smoothing: antialiased; }
+button, input, select, textarea { font-family: inherit; }
+input, select, textarea { color-scheme: dark; }
+::selection { background: rgb(216 178 115 / 0.35); }
+:focus-visible { outline: 2px solid rgb(216 178 115 / 0.7); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums lining-nums; }
+
+@keyframes orbit-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.orbit-ui { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.orbit-rise { animation: orbit-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@media (prefers-reduced-motion: reduce) { .orbit-rise { animation: none; } }
